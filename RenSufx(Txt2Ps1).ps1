@@ -1,21 +1,25 @@
-# 改名対象のファイルをワイルドカー$TypeInドで指定
-$target_filename = "*.ps1.txt" #★
+# Powshellのスクリプト(*.ps1)をメールすると拒否されるし、誤って実行されるのは危ないので、
+# 拡張子(.ps1)の後ろにさらに接尾文字(.txt)を付加して、無害化した。
+# 無害化したスクリプト(*.ps1.txt)を元に戻す(*.ps1)
+# 例　test.ps1.txt → test.ps1
+
+# 改名対象のファイルをワイルドカード抜きで指定
+$target_filename = ".ps1.txt" #★
+$aster_target_filename = "*" + $target_filename
 # 出力するログファイル名
 $log_filename = "PS1_test_RenSufx(Txt2Ps1).log"
 # 動作環境のルートフォルダ
-$env_root = "D:\Users\hogehoge\PS1_test"
-# 処理対象のフォルダ（サブフォルダも対象になる） 
-$path1 = $env_root #★ + "MST"
+$env_root = "D:\Users\hogehoge\PS1_test\" #★
+# 処理対象のフォルダ（サブフォルダは対象外。対象にするならば-Recurseオプションをつけること） 
+$target_folder = "ENV" #★
+$path1 = $env_root + $target_folder
 # 接尾文字
 $suffix = ".ps1" #★
-
-# Tips
-# コンソール文字に色を付ける
-# https://tex2e.github.io/blog/powershell/Write-Host-Color
+$aster_suffix = "*" + $suffix #★
 
 # 対象ファイル一覧を出力する直前の警告表示
 $msg0 = "--- step1 ---"
-$msg1 = $target_filename+"ファイルを"+$log_filename+"に"
+$msg1 = $target_folder + "フォルダ配下の" + $target_filename + "ファイルを" + $log_filename + "に"
 Write-Output $msg0,$msg1
 Write-Host "出力します" -ForegroundColor red
 
@@ -29,7 +33,7 @@ $file.WriteLine("--- 改名対象のファイル一覧 ---")
 # 改名対象を抽出して($target_filename)、
 # ファイルに出力する：$file.WriteLine()
 # 2度実行すると後ろに追加されるので、注意。
-$list = Get-ChildItem $path1 -File $target_filename #★ -Recurse
+$list = Get-ChildItem $path1 -File $aster_target_filename #★ -Recurse
 foreach ($item in $list) {
 	$file.WriteLine($item.FullName)
 }
@@ -53,27 +57,25 @@ If($TypeIn -ne "Y"){
 	}
 Write-Output "実行します"
 
-#Tips [Rename-Itemで一括リネーム チートシート](https://catovis.com/archives/419)
-#    ForEach-Object で処理対象となるオブジェクトは $_ という変数でアクセスすることができます。
+#Tips [文字列を置換する方法](https://bayashita.com/p/entry/show/158)
+#    PowerShell で文字列を置換するには Replace メソッドを使用します。
+#    Replace メソッドでは、条件に一致した文字列をすべて置換します。
+#    例 文字列オブジェクト.Replace(置換前の文字列, 置換後の文字列) 
 
-#Tips [powershellで角括弧、ブラケットが入った文字を扱う時は注意する](https://arimasou16.com/blog/2014/02/08/00132/)
-#    角括弧・ブラケット[]があると、 角括弧はキャストする型を表すので-Pathには使えない。
-#    角括弧がそのまま文字列で解釈されるように-LiteralPathを使う。
-
-$list = Get-ChildItem $path1 -File $target_filename #★ -Recurse ;
+$list = Get-ChildItem $path1 -File $aster_target_filename #★ -Recurse ;
 foreach ($item in $list) {
-	$newName = $item.Basename + $suffix #★ 
+    $newName = $item.FullName.Replace($target_filename, $suffix) #★
 	Rename-Item -LiteralPath $item.FullName -NewName $newName
 }
 
 # 対象ファイル一覧を出力する直前の警告表示
 $msg0 = "--- step3 ---"
-$msg1 = $target_filename+"ファイルを"+$log_filename+"に"
+$msg1 = $target_folder + "フォルダ配下の"+$target_filename+"ファイルを"+$log_filename+"に"
 Write-Output $msg0,$msg1
 Write-Host "出力します" -ForegroundColor red
 
 # ファイル書き込み用のストリームを開く：New-Object System.IO.StreamWriter()
-$textfile = $env_root+$log_filename
+$textfile = $env_root + $log_filename
 $file = New-Object System.IO.StreamWriter($textfile, $true, [System.Text.Encoding]::GetEncoding("UTF-8"))
 $file.WriteLine("--- 改名後のファイル一覧 ---")
 
@@ -82,7 +84,7 @@ $file.WriteLine("--- 改名後のファイル一覧 ---")
 # 改名対象を抽出して($target_filename)、
 # ファイルに出力する：$file.WriteLine()
 # 2度実行すると後ろに追加されるので、注意。
-$list = Get-ChildItem $path1 -File $target_filename #★ -Recurse
+$list = Get-ChildItem $path1 -File $aster_suffix #★ -Recurse
 foreach ($item in $list) {
 	$file.WriteLine($item.FullName)
 }

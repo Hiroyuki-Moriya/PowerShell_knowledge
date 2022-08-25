@@ -1,9 +1,9 @@
-# 改名対象のファイルをワイルドカー$TypeInドで指定
+# 改名対象のファイルをワイルドカードで指定
 $target_filename = "*.txt"
 # 出力するログファイル名
 $log_filename = "PS1_test_RenSufx.log"
 # 動作環境のルートフォルダ
-$env_root = "C:\Users\hogehoge\Desktop\PS1_test\"
+$env_root = "D:\Users\hogehoge\PS1_test\" #★
 # 処理対象のフォルダ（サブフォルダも対象になる） 
 $path1 = $env_root + "MST"
 # 接尾文字
