@@ -1,0 +1,6 @@
+＜実行コンソール＞
+
+PS> .\call_ps1_Parent.ps1 HelloWorld
+
+＜実行結果のhoge.txtの内容＞
+引数に HelloWorld が入力されました
