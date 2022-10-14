@@ -25,3 +25,21 @@
 ---
 ### 2022/8/26
 * RenSufxNum.ps1 更新日時の順に番号を振り、それを接尾文字にしてリネームするスクリプト
+---
+### 2022/10/13 実用に合わせて改造していくため参考資料を収集
+[参考 Windows PowerShell 入門](https://codezine.jp/article/corner/10)
+[参考 Windows PowerShell 活用編](https://codezine.jp/article/corner/251)
+[参考 Windows PowerShell コマンドレットのヘルプ](https://forsenergy.com/ja-jp/windowspowershellhelp/html/7908faf0-0e08-443d-8060-aac911e5a7e0.htm)
+---
+### 2022/10/14 このバージョンから環境パスを取得するように変更
+* RenSufxDT_v2.ps1 ファイル作成日時をつけてリネームする。リネーム対象と対象外のファイル名を指定できる
+* ConsoleIn.ps1 Powershellスクリプトに引数を渡す
+* call_ps1_Parent.ps1 処理１スクリプトと処理２スクリプトを呼び出すスクリプト
+** call_ps1_Child_1.ps1 処理１のスクリプト（引数の文字列をテキストファイルに書き出す）
+** call_ps1_Child_2.ps1 処理２のスクリプト（書き出したファイル内容を読み出す）
+* call_Note_Parent.ps1 処理１スクリプトと外部プログラムを呼び出すスクリプト
+* RenSufxDT_v3.ps1 ファイル作成日時をつけてリネームする。起動時にコンソールからリネーム対象と対象外のファイル名を指定できる
+* call_RenSufx.ps1 親スクリプト。RenSufxDT_v3.ps1にリネーム対象と対象外のファイル名を指定して起動する
+* RenSufx(ps1toTxt)_v2.ps1 無害化対象を*.ps1とするが、自分自身RenSufx(ps1toTxt)_v2.ps1は無害化対象外にする
+* RenSufx(Txt2Ps1)_v2.ps1 無害化したスクリプト(*.ps1.txt)を元に戻すと(*.ps1.ps1)だったが正しくした(*.ps1)
+---
