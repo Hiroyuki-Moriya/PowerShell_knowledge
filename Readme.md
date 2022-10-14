@@ -27,9 +27,9 @@
 * RenSufxNum.ps1 更新日時の順に番号を振り、それを接尾文字にしてリネームするスクリプト
 ---
 ### 2022/10/13 実用に合わせて改造していくため参考資料を収集
-[参考 Windows PowerShell 入門](https://codezine.jp/article/corner/10)
-[参考 Windows PowerShell 活用編](https://codezine.jp/article/corner/251)
-[参考 Windows PowerShell コマンドレットのヘルプ](https://forsenergy.com/ja-jp/windowspowershellhelp/html/7908faf0-0e08-443d-8060-aac911e5a7e0.htm)
+[参考 Windows PowerShell 入門](https://codezine.jp/article/corner/10)  
+[参考 Windows PowerShell 活用編](https://codezine.jp/article/corner/251)  
+[参考 Windows PowerShell コマンドレットのヘルプ](https://forsenergy.com/ja-jp/windowspowershellhelp/html/7908faf0-0e08-443d-8060-aac911e5a7e0.htm)  
 ---
 ### 2022/10/14 このバージョンから環境パスを取得するように変更
 * RenSufxDT_v2.ps1 ファイル作成日時をつけてリネームする。リネーム対象と対象外のファイル名を指定できる
